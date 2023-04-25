@@ -1,14 +1,14 @@
 <?php
-    session_start();
+session_start();
 
-    // Not logged in, redirect to unauthorizedaccess.php script
+   // // Not logged in, redirect to unauthorizedaccess.php script
     if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_access_privileges']))
     {
         header("Location: unauthorizedaccess.php");
         exit();
     }
 
-    // IF NOT admininstrative access AND NOT editing their own details, redirect to unauthorizedaccess.php script
+    //IF NOT admininstrative access AND NOT editing their own details, redirect to unauthorizedaccess.php script
     $id_to_edit = "";
 
     if (isset($_GET['id_to_edit']))

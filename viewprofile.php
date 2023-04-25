@@ -11,6 +11,11 @@ $page_title = ET_DETAILS_PAGE;
         href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
         integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" 
         crossorigin="anonymous">
+  <link rel="stylesheet"
+        href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+        crossorigin="anonymous">
+
   <title>
     <?= $page_title ?>
   </title>
@@ -39,26 +44,44 @@ $page_title = ET_DETAILS_PAGE;
           or trigger_error('Error connecting to MySQL server for '
             . DB_NAME, E_USER_ERROR);
 
-        $query = "SELECT * FROM exercise_user WHERE id = ?";
+        // Get exercise_user information from the db 
+        $user_query = "SELECT * FROM exercise_user WHERE id = ?";
 
-        $result = parameterizedQuery($dbc, $query, 'i', $id)
+        $user_result = parameterizedQuery($dbc, $user_query, 'i', $id)
           or trigger_error(mysqli_error($dbc), E_USER_ERROR);
 
-        if (mysqli_num_rows($result) == 1):
+        if (mysqli_num_rows($user_result) == 1):
 
-          $row = mysqli_fetch_assoc($result);
+          $row = mysqli_fetch_assoc($user_result);
 
           $profile_image_file = $row['image_file'];
 
-          if (empty($profile_image_file)):
-            $profile_image_file = ET_UPLOAD_PATH . ET_DEFAULT_PROFILE_FILE_NAME;
+          if (empty($profile_image_file)) {
+            $default_profile_image = ET_UPLOAD_PATH . ET_DEFAULT_PROFILE_FILE_NAME;
+            $profile_image_file = $default_profile_image;
+          }
 
-          endif;
+          // Retrieve the user's exercise log from the exercise_log table
+          $exercise_query = "SELECT * FROM exercise_log WHERE user_id = ? ORDER BY exercise_date DESC LIMIT 15";
+          
+          $exercise_result = parameterizedQuery($dbc, $exercise_query, 'i', $id)
+          or trigger_error(mysqli_error($dbc), E_USER_ERROR);
 
-          ?>
+          if (mysqli_num_rows($exercise_result) > 0):
+            $exercise_data = array();
+          
+            while ($exercise_row = mysqli_fetch_assoc($exercise_result)) {
+              $exercise_data[] = $exercise_row;
+              $exercise_id = $exercise_row['id'];
+            }
+          
+            ?>
+           <div class='nav-link' style='text-align: left' id='edit-profile-link'>If you would like to change any of the details of this profile, feel free to <a
+                href='editprofile.php?id_to_edit=<?= $row['id'] ?>'> edit it</a></div> 
           <h1>
             <?= $row['user_name'] ?>
           </h1>
+          
           <div class="row">
             <div class="col-4">
               <img src="<?= $profile_image_file ?>" class="img-thumbnail" style="max-height: 200px;" alt="Profile image">
@@ -96,10 +119,43 @@ $page_title = ET_DETAILS_PAGE;
                       <?= $row['weight'] ?>
                     </td>
                   </tr>
+                  <tr>
+                  </tr>
                 </tbody>
               </table>
-            </div>
+            </div> 
           </div>
+          
+          <hr/>
+          <h2>Exercise Log</h2>
+            <div class="row">
+                <table class="table table-striped">
+                  <tbody>
+                    <tr>
+                      <th scope="col">Date</th>
+                      <th scope="col">Type</th>
+                      <th scope="col">Heartrate</th>
+                      <th scope="col">Time (minutes)</th>
+                      <th scope="col">Calories Burned</th>
+                      <th scope="col"></th>
+                    </tr>
+                    <?php foreach ($exercise_data as $exercise_row): ?>
+                    <?php $exercise_id = $exercise_row['id']; ?>
+                      <tr>
+                        <td><?= $exercise_row['exercise_date'] ?></td>
+                        <td><?= $exercise_row['exercise_type'] ?></td>                    
+                        <td><?= $exercise_row['heartrate'] ?></td>
+                        <td><?= $exercise_row['exercise_time'] ?></td>
+                        <td><?= $exercise_row['calories_burned'] ?></td>
+                        <td><a class='nav-link' href='removeexercise.php?id_to_delete=<?= $exercise_id ?>'><i class='fas fa-trash-alt'></i></a></td>
+                      </tr>
+                    <?php endforeach; ?>
+                  </tbody>
+                </table>
+              </div>
+            <?php endif; ?>
+
+
           <?php
 
           if (
@@ -109,18 +165,17 @@ $page_title = ET_DETAILS_PAGE;
           ):
             ?>
             <hr />
-            <div class='nav-link'>If you would like to change any of the details of this profile, feel free to <a
-                href='editprofile.php?id_to_edit=<?= $row['id'] ?>'> edit it</a></div>
+            
           <?php
           endif;
         else:
           ?>
-          <h3>No Profile Details :-(</h3>
+          <h3>You updated your profile!</h3>
           <?php
         endif;
-      else:
+      
         ?>
-        <h3>No Profile Details :-(</h3>
+        <h3>Thanks for being wonderful!</h3>
         <?php
       endif;
       ?>

@@ -8,8 +8,10 @@ $page_title = ET_SIGNUP_PAGE;
   <title>
     <?= $page_title ?>
   </title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <link rel="stylesheet" 
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" 
+        crossorigin="anonymous">
 </head>
 
 <body>
@@ -41,7 +43,7 @@ $page_title = ET_SIGNUP_PAGE;
           require_once('queryutils.php');
 
           $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
-            or trigger_error(
+              or trigger_error(
               'Error connecting to MySQL server for DB_NAME.',
               E_USER_ERROR
             );
@@ -67,20 +69,20 @@ $page_title = ET_SIGNUP_PAGE;
 
             // Direct the user to the login page
             echo "<h4><p class='text-success'>Thank you for signing up <strong>$user_name</strong>! "
-              . "Your new account has been successfully created.<br/>"
-              . "You're now ready to <a href='login.php'>log in</a>.</p></h4>";
+                . "Your new account has been successfully created.<br/>"
+                . "You're now ready to <a href='login.php'>log in</a>.</p></h4>";
 
             $show_sign_up_form = false;
           } else // An account already exists for this user
           {
             echo "<h4><p class='text-danger'>An account already exists for this username: "
-              . "<span class='font-weight-bold'> ($user_name)</span>. Please use  "
-              . "a different user name.</p></h4><hr/>";
+                . "<span class='font-weight-bold'> ($user_name)</span>. Please use  "
+                . "a different user name.</p></h4><hr/>";
 
           }
         } else {
           // Output error message
-          echo "<h4><p class='text-danger'>You must enter both a user name 
+            echo "<h4><p class='text-danger'>You must enter both a user name 
                         and password.</p></h4><hr/>";
         }
       }
@@ -197,14 +199,14 @@ $page_title = ET_SIGNUP_PAGE;
     }
   </script>
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-    crossorigin="anonymous"></script>
+          integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+          crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-    crossorigin="anonymous"></script>
+          integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+          crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
-    integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
-    crossorigin="anonymous"></script>
+          integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+          crossorigin="anonymous"></script>
 </body>
 
 </html>
