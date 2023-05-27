@@ -26,6 +26,7 @@
             require_once('dbconnection.php');
             require_once('exercisetrackerfileconstants.php');
 
+            // Connect to db and query to display user data on homepage
             $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
                     or trigger_error('Error connecting to MySQL server for' .  DB_NAME, E_USER_ERROR);
 
@@ -64,7 +65,7 @@
                     if (isset($_SESSION['user_access_privileges'])
                             && $_SESSION['user_access_privileges'] == 'admin')
                     {
-                        $profile_row .=  "<td><a class='nav-link' href='removeexercise.php?id_to_delete="
+                        $profile_row .=  "<td><a class='nav-link' href='removeprofile.php?id_to_delete="
                                 . $row['id'] ."'><i class='fas fa-trash-alt'></i></a></td></tr>";
                     }
 

@@ -1,7 +1,6 @@
 <?php
 require_once('pagetitles.php');
 $page_title = ET_ADD_PAGE;
-require_once('authorizeaccess.php');
 ?>
 <!DOCTYPE html>
 <html>
@@ -82,6 +81,10 @@ require_once('authorizeaccess.php');
                 } else {
                     $calories_burned = ((-37.7495 + (0.5391 * $heartrate) + (0.01644 * $weight) + (0.1379 * $age)) / 4.184) * $exercise_time;
                 }
+
+
+                //Round the number to two decimal points
+                $calories_burned = number_format($calories_burned, 2);
         
 
                 $query = "INSERT INTO exercise_log (user_id, exercise_type, exercise_date, exercise_time, heartrate, calories_burned) "
@@ -103,11 +106,9 @@ require_once('authorizeaccess.php');
                     $display_add_exercise_form = false;
                     ?>
                     <h3 class="text-info">The Following Exercise Details were Added:</h3><br />
-
-                    <h1>
-                        <?= "$exercise_type" ?>
-                    </h1>
-                        <div class="col">
+                    <div class="col">
+                    <h1><?= "$exercise_type" ?></h1>
+                        
                             <table class="table table-striped">
                                 <tbody>
                                     <tr>
@@ -137,14 +138,14 @@ require_once('authorizeaccess.php');
                                 </tbody>
                             </table>
                         </div>
+                </div>
                     </div>
                     <hr />
-                    <p>Would you like to <a href='<?= $_SERVER['PHP_SELF'] ?>'> add another exercise</a>?</p>
+                    <p scope="col" class="ml-5">Would you like to <a href='<?= $_SERVER['PHP_SELF'] ?>'> add another exercise</a>?</p>
                     <?php
             }
 
             if ($display_add_exercise_form) {
-                echo var_dump($_SESSION);
                 ?>
                 <form enctype="multipart/form-data" class="needs-validation"
                         novalidate method="POST" action="<?= $_SERVER['PHP_SELF'] ?>">
@@ -221,14 +222,14 @@ require_once('authorizeaccess.php');
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
-        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
-        crossorigin="anonymous"></script>
+            integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+            crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
-        integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
-        crossorigin="anonymous"></script>
+            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+            crossorigin="anonymous"></script>
 </body>
 
 </html>

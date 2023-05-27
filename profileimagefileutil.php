@@ -18,15 +18,15 @@ function validateProfileImageFile()
     $error_message = "";
 
     // Check for $_FILES being set and no errors.
-    if (isset($_FILES) && $_FILES['profile_image_file']['error'] == UPLOAD_ERR_OK)
+    if (isset($_FILES) && $_FILES['image_file']['error'] == UPLOAD_ERR_OK)
     {
         // Check for uploaded file < Max file size AND an acceptable image type
-        if ($_FILES['profile_image_file']['size'] > ET_MAX_FILE_SIZE)
+        if ($_FILES['image_file']['size'] > ET_MAX_FILE_SIZE)
         {
             $error_message = "The profile file image must be less than " . ET_MAX_FILE_SIZE . " Bytes";
         }
 
-        $image_type = $_FILES['profile_image_file']['type'];
+        $image_type = $_FILES['image_file']['type'];
 
         if ($image_type != 'image/jpg' && $image_type != 'image/jpeg' && $image_type != 'image/pjpeg'
             && $image_type != 'image/png' && $image_type != 'image/gif')
@@ -41,8 +41,8 @@ function validateProfileImageFile()
             }
         }
     }
-    elseif (isset($_FILES) && $_FILES['profile_image_file']['error'] != UPLOAD_ERR_NO_FILE
-        && $_FILES['profile_image_file']['error'] != UPLOAD_ERR_OK)
+    elseif (isset($_FILES) && $_FILES['image_file']['error'] != UPLOAD_ERR_NO_FILE
+        && $_FILES['image_file']['error'] != UPLOAD_ERR_OK)
     {
         $error_message = "Error uploading profile image file.";
     }

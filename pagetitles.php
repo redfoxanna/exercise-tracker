@@ -8,3 +8,4 @@
     define('ET_ADD_PAGE', 'Exercise Tracker - Log Exercise');
     define('ET_EDIT_PAGE', 'Exercise Tracker - Edit Profile');
     define('ET_REMOVE_PAGE', 'Exercise Tracker - Remove Exercise');
+    define('ET_REMOVE_USER_PAGE', 'Exercise Tracker - Remove Profile');
